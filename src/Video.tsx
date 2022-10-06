@@ -1,6 +1,7 @@
 import {Composition} from 'remotion';
 import {HelloWorld} from './HelloWorld';
 import {Logo} from './HelloWorld/Logo';
+import {Biker} from './Biker';
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -27,6 +28,15 @@ export const RemotionVideo: React.FC = () => {
 			<Composition
 				id="OnlyLogo"
 				component={Logo}
+				durationInFrames={150}
+				fps={30}
+				width={1920}
+				height={1080}
+			/>
+			{/* biker video */}
+			<Composition
+				id="bikerFigmaSVG"
+				component={Biker}
 				durationInFrames={150}
 				fps={30}
 				width={1920}

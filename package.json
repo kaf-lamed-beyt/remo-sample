@@ -21,6 +21,7 @@
     "prettier": "^2.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-svg": "^15.1.9",
     "remotion": "3.2.25",
     "typescript": "^4.6.3"
   }
