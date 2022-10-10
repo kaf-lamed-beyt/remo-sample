@@ -1,5 +1,4 @@
-import {AbsoluteFill} from 'remotion';
-import {evolvePath} from '@remotion/paths';
+import {AbsoluteFill, interpolate} from 'remotion';
 import {spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {vehiclePaths} from './paths';
 
@@ -7,64 +6,37 @@ export const Rocket: React.FC = () => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
 
-	const progress = spring({
+	const up = spring({
 		fps,
 		frame: frame - 20,
 		config: {
-			damping: 200,
-			mass: 4,
+			damping: 20,
+			mass: 15,
 		},
 	});
 
-	const up = spring({
+	const scale = spring({
 		fps,
-		frame: frame - 10,
+		frame,
 		config: {
-			damping: 200,
-			mass: 4,
+			mass: 1,
+			stiffness: 200,
 		},
 	});
 
-	// Const {strokeDasharray, strokeDashoffset} = evolvePath(progress, d);
-
-	// // Adding a scale animation
-	// const scale = spring({
-	// 	fps,
-	// 	frame,
-	// 	config: {
-	// 		stiffness: 100,
-	// 	},
-	// });
-
-	// const comeUpAndBeNoisy = (fps: number, delay: number, frame: number) => {
-	// 	const up = spring({
-	// 		fps,
-	// 		frame: frame - delay,
-	// 		config: {
-	// 			damping: 200,
-	// 		},
-	// 	});
-
-	// 	// Const transform = {
-	// 	// 	translateY: (1 - up) * 2000,
-	// 	// };
-
-	// 	// return `translateY(${transform.translateY})`;
-	// 	return up;
-	// };
+	const launch = `translateY(${interpolate(up, [0, 1], [0, -3000])}px)`;
 
 	return (
 		<AbsoluteFill
 			style={{
 				backgroundColor: 'pink',
-				fontSize: 500,
 				justifyContent: 'center',
 				alignItems: 'center',
 			}}
 		>
 			<svg
-				width="394"
-				height="394"
+				width="800"
+				height="800"
 				viewBox="0 0 394 394"
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"
@@ -335,7 +307,14 @@ export const Rocket: React.FC = () => {
 							/>
 						</g>
 					</g>
-					<g id="vehicle" style={{transform: `scale(${up})`}}>
+					<g
+						id="vehicle"
+						style={{
+							transform: `scale(${scale}) ${launch}`,
+							transformOrigin: 'center center',
+							transformBox: 'fill-box',
+						}}
+					>
 						<path
 							id="Vector_30"
 							d={vehiclePaths.one}
